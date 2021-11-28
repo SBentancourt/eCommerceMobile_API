@@ -8,8 +8,7 @@ import java.util.Date;
 
 @Entity
 @Data
-@Table(indexes = {@Index(name = "PRIMARY", columnList = "correo"),
-                    @Index(name = "usuario02", columnList = "cedula", unique = true)})
+@Table(indexes = {@Index(name = "usuario02", columnList = "cedula", unique = true)})
 public class Usuario implements Serializable {
     @Id                                     private String correo;
     @Column(length = 30, nullable = false)  private String clave;
