@@ -4,12 +4,14 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 @Data
-@Table(indexes = {@Index(name = "categoria02", columnList = "nombre", unique = true)})
 public class Categoria implements Serializable {
-    @Id                                         private int id;
-    @Column(nullable = false, length = 30)      private String nombre;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID_CATEGORIA")                              private int id;
+
+    @Column(nullable = false, length = 30, unique = true)       private String nombre;
 }
+
