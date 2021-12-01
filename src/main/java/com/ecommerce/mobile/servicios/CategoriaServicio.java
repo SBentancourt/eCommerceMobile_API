@@ -2,6 +2,7 @@ package com.ecommerce.mobile.servicios;
 
 import com.ecommerce.mobile.entidades.Categoria;
 import com.ecommerce.mobile.entidades.SubCategoria;
+import com.ecommerce.mobile.entidades.SubCategoriaPK;
 import com.ecommerce.mobile.entidades.Usuario;
 
 import java.util.List;
@@ -15,8 +16,10 @@ public interface CategoriaServicio {
     public void eliminarCategoria(int id);
 
     // -- SubCategorias
-    public Optional<SubCategoria> obtenerSubCategoriasDeCat(int id);
-    public Iterable<SubCategoria> obtenerSubCategoria(int idcat, int idscat);
+    public List<SubCategoria> obtenerSubCategoriasDeCat(int id);
+    public SubCategoria obtenerSubCategoria(SubCategoriaPK subcat);
     public SubCategoria guardarSubCategoria(SubCategoria subCategoria);
-    public void eliminarSubCategoria(int idcat, int idscat);
+    public void eliminarSubCategoria(SubCategoriaPK subcat);
+    public SubCategoria obtenerUltimaSubCategoria(int idcategoria);
+    public void actualizarSubCategoria(String nombre, int idcat, int idscat);
 }

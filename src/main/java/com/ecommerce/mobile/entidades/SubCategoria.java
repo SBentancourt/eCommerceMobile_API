@@ -1,5 +1,6 @@
 package com.ecommerce.mobile.entidades;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -12,7 +13,7 @@ import java.io.Serializable;
 @Table(indexes = {@Index(name = "subcat01", columnList = "id_categoria")})
 public class SubCategoria implements Serializable {
 
-    @EmbeddedId                                                                    private SubCategoriaPK subCategoriaPK;
+    @EmbeddedId @JsonProperty("id")                                                private SubCategoriaPK subCategoriaPK;
     @Column(nullable = false,
             length = 30, unique = true)                                            private String nombre;
 

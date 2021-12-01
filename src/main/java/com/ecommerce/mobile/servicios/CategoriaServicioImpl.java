@@ -2,6 +2,7 @@ package com.ecommerce.mobile.servicios;
 
 import com.ecommerce.mobile.entidades.Categoria;
 import com.ecommerce.mobile.entidades.SubCategoria;
+import com.ecommerce.mobile.entidades.SubCategoriaPK;
 import com.ecommerce.mobile.entidades.Usuario;
 import com.ecommerce.mobile.repositorios.CategoriaRepo;
 import com.ecommerce.mobile.repositorios.SubCategoriaRepo;
@@ -50,25 +51,37 @@ public class CategoriaServicioImpl implements CategoriaServicio{
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<SubCategoria> obtenerSubCategoriasDeCat(int id) {
-        return null;
+    public List<SubCategoria> obtenerSubCategoriasDeCat(int idCategoria) {
+        return subCategoriaRepo.findSubCategoriasByCategoria_Id(idCategoria);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Iterable<SubCategoria> obtenerSubCategoria(int idcat, int idscat) {
-        return null;
+    public SubCategoria obtenerSubCategoria(SubCategoriaPK subcat) {
+        return subCategoriaRepo.findSubCategoriaBySubCategoriaPK(subcat);
     }
 
     @Override
     @Transactional
     public SubCategoria guardarSubCategoria(SubCategoria subCategoria) {
-        return null;
+        return subCategoriaRepo.save(subCategoria);
     }
 
     @Override
     @Transactional
-    public void eliminarSubCategoria(int idcat, int idscat) {
+    public void eliminarSubCategoria(SubCategoriaPK subcat) {
+        subCategoriaRepo.deleteSubCategoriaBySubCategoriaPK(subcat);
+    }
 
+    @Override
+    @Transactional(readOnly = true)
+    public SubCategoria obtenerUltimaSubCategoria(int idcategoria) {
+        return subCategoriaRepo.findTopByCategoria_IdOrderBySubCategoriaPKDesc(idcategoria);
+    }
+
+    @Override
+    @Transactional
+    public void actualizarSubCategoria(String nombre, int idcat, int idscat) {
+        subCategoriaRepo.updateNombreSubCategoria(nombre, idcat, idscat);
     }
 }
