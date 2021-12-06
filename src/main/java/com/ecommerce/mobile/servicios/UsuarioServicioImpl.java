@@ -38,3 +38,6 @@ public class UsuarioServicioImpl implements UsuarioServicio {
         usuarioRepo.deleteById(correo);
     }
 }
+
+// -- *** COMENTARIOS *** -- //
+// -- los métodos .findById() y .deleteById() únicamente funcionan si el id es String.
