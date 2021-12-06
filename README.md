@@ -39,6 +39,9 @@ Primero se debe crear la entidad A. Luego se debe crear una clase que va a conte
 Por último, se crea la clase de la entidad débil. Esta clase va a tener la etiqueta @Entity. Definir un atributo del tipo de la clase que tiene la clave primaria de la entidad débil y al mismo asignarle la etiqueta @EmbeddedId. Adicionalmente, se debe realizar la asociación entre las entidades B y A. En la entidad B se debe definir un atributo del tipo de la entidad A y agregarle las etiquetas @ManyToOne y @JoinColumn. En esta última se especifica que columna hace el join entre las tablas. 
 ######
 Ejemplo Relación 1 - N Débil: Categoría (1) -> SubCategoría (N). La clase SubCategoriaPK es la clave primaria de la entidad (tabla) SubCategoría.
+#### 3b.- Relación 1 - N (Entidad A (1) -> Entidad B (N))
+Primero se debe crear la entidad A. Luego se debe crear la entidad B y en esta se debe hacer la relación con la entidad A. Para hacer la relación se debe agregar el atributo de la entidad A y agregarle la etiqueta @ManyToOne.
+###### Esta relación se da entre SubCategoria (1) y Producto (N). En este caso, la entidad SubCategoria tiene clave compuesta, por lo que en la tabla Producto se van a generar 2 columnas (una por cada atributo de la clave primaria de SubCategoría). 
  
 
 
