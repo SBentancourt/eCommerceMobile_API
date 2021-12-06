@@ -14,6 +14,8 @@
         <property name="format_sql">false</property> -->
         <mapping class="com.ecommerce.mobile.entidades.Categoria"/>
         <mapping class="com.ecommerce.mobile.entidades.SubCategoria"/>
+        <mapping class="com.ecommerce.mobile.entidades.Producto"/>
+        <mapping class="com.ecommerce.mobile.entidades.MedioPago"/>
         <mapping class="com.ecommerce.mobile.entidades.Usuario"/>
     </session-factory>
 </hibernate-configuration>
