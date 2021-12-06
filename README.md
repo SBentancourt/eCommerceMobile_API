@@ -7,7 +7,7 @@ Para decir que la interfaz va a ser un repositorio se le debe agregar @Repositor
 en la definición de dicha interfaz.
 ###### @Repository: Es un marcador para cualquier clase que cumpla el rol o el estereotipo de un repositorio (también conocido como Data Access Object o DAO).
 Se le pueden agregar "funcionalidades" a la interfaz haciendo que extienda (o inlcuya) los métodos de las clases Repository, JpaRepository, entre otras. Estas clases son brindadas por SpringBoot. Estos métodos son para obtener y/o manipular objetos que tengamos definidos de forma sencilla.
-###### Si consideramos la interfaz UsuarioRepo, la misma extiende los métodos de JpaRepository, la cual precisa que se le pase, la clase de la entidad a la cual va a manipular y tipo de dato asociado al ID de dicha entidad. --> public interface UsuarioRepo extends JpaRepository<Usuario, String>.
+###### Si consideramos la interfaz UsuarioRepo, la misma extiende los métodos de JpaRepository, la cual precisa que se le pase, la clase de la entidad a la cual va a manipular y tipo de dato asociado al ID de dicha entidad. --> public interface UsuarioRepo extends JpaRepository<Usuario, String>. Adicionalmente, se le pueden agregar nuevos métodos al repositorio para que busque, agregue, modifique o elimine datos de una forma mas específica.
 Luego de definir la interfaz que va a actuar de Repositorio, se deben definir los servicios. Los servicios son las operaciones que se comunican con las entidades (con los datos). Para crear estas operaciones se debe crear lo siguiente:
 ######
 a) Se debe definir una interfaz, la cual va a contener el cabezal de las operaciones (Por ejemplo, UsuarioServicio.java)
