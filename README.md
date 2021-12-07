@@ -32,7 +32,7 @@ Se debe definir una clase y debe implementar del tipo Serializable. Se debe agre
 Si se agrega la etiqueta @Table se puede configurar, nombre de tabla que se creará, indices, entre otras cosas. Ejemplo: Usuario.java.
 ###### @Data esta etiqueta pertenece a la libreria lombok y la misma hace que se "generen" los getters y setters automaticamente (no se muestran en el código).
 
-### 3.- ¿Cómo relacionar entidades en Java? 
+### 3.- Relaciones utilizadas en la API.
 #### 3a.- Relación 1 - N Débil (Entidad A (1) -> Entidad B (N))
 Primero se debe crear la entidad A. Luego se debe crear una clase que va a contener la clave primaria de la entidad debil (clave primaria entidad A + clave primaria entidad B). Esta clase debe tener la etiqueta @Embeddable y NO debe tener la etiqueta @Entity.
 ######
