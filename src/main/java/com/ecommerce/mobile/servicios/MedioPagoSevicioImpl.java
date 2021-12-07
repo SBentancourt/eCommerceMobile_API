@@ -19,16 +19,19 @@ public class MedioPagoSevicioImpl implements MedioPagoServicio{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Iterable<MedioPago> obtenerMediosDePago() {
         return medioPagoRepo.findAll();
     }
 
     @Override
+    @Transactional
     public MedioPago guardarMedioDePago(MedioPago medioPago) {
         return medioPagoRepo.save(medioPago);
     }
 
     @Override
+    @Transactional
     public void eliminarMedioDePago(int id) {
         medioPagoRepo.deleteMedioPagoById(id);
     }
