@@ -16,6 +16,8 @@
         <mapping class="com.ecommerce.mobile.entidades.SubCategoria"/>
         <mapping class="com.ecommerce.mobile.entidades.Producto"/>
         <mapping class="com.ecommerce.mobile.entidades.MedioPago"/>
+        <mapping class="com.ecommerce.mobile.entidades.Carrito"/>
+        <mapping class="com.ecommerce.mobile.entidades.CarritoProducto"/>
         <mapping class="com.ecommerce.mobile.entidades.Usuario"/>
     </session-factory>
 </hibernate-configuration>
