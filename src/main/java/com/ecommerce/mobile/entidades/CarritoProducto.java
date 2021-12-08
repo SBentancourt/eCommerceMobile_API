@@ -11,7 +11,8 @@ import java.io.Serializable;
 
 @Data
 @Entity     @NoArgsConstructor
-@Table(indexes = {@Index(name = "CarritoProd01", columnList = "id_producto")})
+@Table(indexes = {@Index(name = "CarritoProd01", columnList = "id_producto"),
+                    @Index(name = "CarritoProd02", columnList = "id_usuario")})
 public class CarritoProducto implements Serializable {
     @EmbeddedId
     @JsonProperty("id")
@@ -28,14 +29,20 @@ public class CarritoProducto implements Serializable {
     @JoinColumn(name = "id_producto", foreignKey = @ForeignKey(name = "fk_carrito_producto_producto_id"))
     private Producto producto;
 
+    @ManyToOne
+    @MapsId("idUsuario")
+    @JoinColumn(name = "id_usuario", foreignKey = @ForeignKey(name = "fk_carrito_producto_usuario_id"))
+    private Usuario usuario;
+
     private int cantidad;
 
     private double total;
 
-    public CarritoProducto(Carrito carrito, Producto producto, int cantidad, double total) {
-        this.id = new CarritoProductoPK(carrito.getId(), producto.getId());
+    public CarritoProducto(Carrito carrito, Producto producto, Usuario usuario,int cantidad, double total) {
+        this.id = new CarritoProductoPK(carrito.getId(), producto.getId(), usuario.getCorreo());
         this.carrito = carrito;
         this.producto = producto;
+        this.usuario = usuario;
         this.cantidad = cantidad;
         this.total = total;
     }
