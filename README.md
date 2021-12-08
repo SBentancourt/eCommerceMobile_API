@@ -46,7 +46,5 @@ Primero se debe crear la entidad A. Luego se debe crear la entidad B y en esta s
 Para crear una relación N a N y agregarle atributos a la "tercera tabla" que se crea (la tabla de la relación) se debe hacer lo siguiente:                                        1) Hay que crear una clase la cual va a tener los atributos clave de ambas entidades, y a esa clase se le va a agregar la etiqueta @Embeddable y NO debe tener la etiqueta @Entity (al igual que relación 1 a N débil).                                                                                                                                      2) Crear una clase que va a ser la entidad de la relación. A esta clase hay que agregarle la etiqueta @Entity. Adicionalmente, hay que agregarle un atributo de tipo de la clase que tiene las claves primarias de las entidades que se van a relacionar (tipo de la clase creada en el punto 1) y agregarle la etiqueta @EmbeddedId. Esta clase va a tener un atributo de tipo entidad A y un atributo de tipo entidad B. Ambos atributos van a tener la etiqueta @ManyToOne.                                                                 3) En las clases de las entidades A y B se debe agregar un atributo de tipo List de la clase creada en el punto 2 y al mismo agregarle la etiqueta @OneToMany
 ###### Esta relación se da entre Carrito y Producto. La clase creada en el punto 1 es: CarritoProductoPK y la clase creada en el punto 2 es: CarritoProducto.
  
-
-
-
+![CarritoProducto](https://user-images.githubusercontent.com/94640700/145292832-d73f0bc8-16ed-4edc-bacb-b4091080157f.png)
 
