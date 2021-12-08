@@ -129,38 +129,31 @@ public class CategoriaControlador {
 
     private SubCategoria nuevaSubCategoria(SubCategoriaDTO subCategoriaDTO){
 
+        // -- Aca se obtiene la última subcategoria de la categoria indicada
         SubCategoria ultimaSCat = categoriaServicio.obtenerUltimaSubCategoria(subCategoriaDTO.getIdCategoria());
         int nuevaSCat = 0;
+        // -- Aca se define el nuevo id de la nueva subcategoria que se va a agregar
         if (ultimaSCat == null){
             nuevaSCat = 1;
         } else {
             nuevaSCat = ultimaSCat.getSubCategoriaPK().getIdSubCategoria() + 1;
         }
+
         Categoria categoria = categoriaServicio.obtenerCategoriaPorId(subCategoriaDTO.getIdCategoria());
 
         SubCategoriaPK subCategoriaPK = crearSubCategoriaPK(subCategoriaDTO.getIdCategoria(), nuevaSCat);;
 
-        SubCategoria subCategoria = new SubCategoria();
-        subCategoria.setCategoria(categoria);
-        subCategoria.setSubCategoriaPK(subCategoriaPK);
-        subCategoria.setNombre(subCategoriaDTO.getNombreSubCat());
-
+        SubCategoria subCategoria = new SubCategoria(subCategoriaPK, subCategoriaDTO.getNombreSubCat(), categoria);
         return subCategoria;
     }
 
     private SubCategoria obtenerSubCategoria(int idcat, int idscat){
-        SubCategoriaPK subcatId = new SubCategoriaPK();
-        subcatId.setIdCategoria(idcat);
-        subcatId.setIdSubCategoria(idscat);
-
+        SubCategoriaPK subcatId = new SubCategoriaPK(idcat, idscat);
         return categoriaServicio.obtenerSubCategoria(subcatId);
     }
 
     private SubCategoriaPK crearSubCategoriaPK(int idcat, int idscat){
-        SubCategoriaPK subcatId = new SubCategoriaPK();
-        subcatId.setIdCategoria(idcat);
-        subcatId.setIdSubCategoria(idscat);
-
+        SubCategoriaPK subcatId = new SubCategoriaPK(idcat, idscat);
         return subcatId;
     }
 

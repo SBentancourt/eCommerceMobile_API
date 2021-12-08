@@ -1,17 +1,14 @@
 package com.ecommerce.mobile.controladores;
 
 import com.ecommerce.mobile.dto.CarritoDTO;
-import com.ecommerce.mobile.dto.CarritoProductoDTO;
 import com.ecommerce.mobile.entidades.*;
 import com.ecommerce.mobile.servicios.*;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -96,29 +93,29 @@ public class CarritoControlador {
 
     // -- Operaciones que unicamente afectan a la entidad CarritoProducto
     @PostMapping("/productos/agregar")
-    public ResponseEntity<?> setCarritoProducto(@RequestBody CarritoProductoDTO carritoProductoDTO){
+    public ResponseEntity<?> setCarritoProducto(@RequestBody CarritoDTO carritoDTO){
 
-        CarritoProductoPK idCarritoPrd = new CarritoProductoPK(carritoProductoDTO.getId_carrito(), carritoProductoDTO.getId_producto(),
-                                                                carritoProductoDTO.getId_usuario());
+        CarritoProductoPK idCarritoPrd = new CarritoProductoPK(carritoDTO.getId_carrito(), carritoDTO.getId_producto(),
+                carritoDTO.getId_usuario());
 
         CarritoProducto carritoPrd = carritoServicio.obtenerCarritoProductoPorId(idCarritoPrd);
 
-        Producto prd = productoServicio.obtenerProductoPorId(carritoProductoDTO.getId_producto());
-        double totalPrd = prd.getPrecio()*carritoProductoDTO.getCantidad();
-        Carrito carrito = carritoServicio.obtenerCarritoPorId(carritoProductoDTO.getId_carrito());
+        Producto prd = productoServicio.obtenerProductoPorId(carritoDTO.getId_producto());
+        double totalPrd = prd.getPrecio()*carritoDTO.getCantidad();
+        Carrito carrito = carritoServicio.obtenerCarritoPorId(carritoDTO.getId_carrito());
         Boolean esNuevoPrdEnCarrito = false;
         if (carritoPrd == null){
-            Usuario usuario = usuarioServicio.obtenerUsuarioPorId(carritoProductoDTO.getId_usuario()).get();
-            CarritoProducto nuevoCarritoProducto = new CarritoProducto(carrito, prd, usuario, carritoProductoDTO.getCantidad(), totalPrd);
+            Usuario usuario = usuarioServicio.obtenerUsuarioPorId(carritoDTO.getId_usuario()).get();
+            CarritoProducto nuevoCarritoProducto = new CarritoProducto(carrito, prd, usuario, carritoDTO.getCantidad(), totalPrd);
             carritoPrd = nuevoCarritoProducto;
             esNuevoPrdEnCarrito = true;
         } else {
-            carritoPrd.setCantidad(carritoProductoDTO.getCantidad());
+            carritoPrd.setCantidad(carritoDTO.getCantidad());
             carritoPrd.setTotal(totalPrd);
         }
 
         // -- Aca se actualiza el importe total que se graba en la tabla Carrito
-        List<CarritoProducto> productosDeCarrito = carritoServicio.obtenerProductosDeCarrito(carritoProductoDTO.getId_carrito());
+        List<CarritoProducto> productosDeCarrito = carritoServicio.obtenerProductosDeCarrito(carritoDTO.getId_carrito());
         double importeTotalCarrito = 0;
         if (esNuevoPrdEnCarrito){
             importeTotalCarrito = totalPrd;
@@ -177,5 +174,4 @@ public class CarritoControlador {
 
         return ResponseEntity.ok().build();
     }
-
 }
