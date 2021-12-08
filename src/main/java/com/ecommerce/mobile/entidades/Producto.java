@@ -1,8 +1,10 @@
 package com.ecommerce.mobile.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -21,4 +23,10 @@ public class Producto {
                         referencedColumnName = "id_subcategoria"),
     }, foreignKey = @ForeignKey(name = "fk_producto_subcategoria_id"))
                                                             private SubCategoria subCategoria;
+
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "producto")
+    List<CarritoProducto> productosEnCarrito;
+
 }
