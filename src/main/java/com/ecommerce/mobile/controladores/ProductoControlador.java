@@ -77,36 +77,25 @@ public class ProductoControlador {
 
     private Producto nuevoProducto(ProductoDTO producto) {
 
-        SubCategoriaPK idSubCat = new SubCategoriaPK();
-        idSubCat.setIdCategoria(producto.getId_categoria());
-        idSubCat.setIdSubCategoria(producto.getId_subcategoria());
+        SubCategoriaPK idSubCat = new SubCategoriaPK(producto.getId_categoria(), producto.getId_subcategoria());
         SubCategoria subCat = categoriaServicio.obtenerSubCategoria(idSubCat);
 
-        Producto nuevoPrd = new Producto();
-
-        nuevoPrd.setNombre(producto.getNombre());
-        nuevoPrd.setDescripcion(producto.getDescripcion());
-        nuevoPrd.setPrecio(producto.getPrecio());
-        nuevoPrd.setStock(producto.getStock());
-        nuevoPrd.setSubCategoria(subCat);
-
+        Producto nuevoPrd = new Producto(producto.getNombre(), producto.getDescripcion(), producto.getStock(),
+                                            producto.getPrecio(), subCat);
         return nuevoPrd;
     }
 
     private Producto actualizarProducto(Producto productoExistente, ProductoDTO infoProducto){
+
+        SubCategoriaPK idSubCat = new SubCategoriaPK(infoProducto.getId_categoria(), infoProducto.getId_subcategoria());
+        SubCategoria subCat = categoriaServicio.obtenerSubCategoria(idSubCat);
+
         productoExistente.setNombre(infoProducto.getNombre());
         productoExistente.setDescripcion(infoProducto.getDescripcion());
         productoExistente.setPrecio(infoProducto.getPrecio());
         productoExistente.setStock(infoProducto.getStock());
-
-        SubCategoriaPK idSubCat = new SubCategoriaPK();
-        idSubCat.setIdCategoria(infoProducto.getId_categoria());
-        idSubCat.setIdSubCategoria(infoProducto.getId_subcategoria());
-        SubCategoria subCat = categoriaServicio.obtenerSubCategoria(idSubCat);
-
         productoExistente.setSubCategoria(subCat);
 
         return productoExistente;
-
     }
 }

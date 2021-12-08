@@ -1,8 +1,6 @@
 package com.ecommerce.mobile.controladores;
 
-import com.ecommerce.mobile.entidades.Categoria;
 import com.ecommerce.mobile.entidades.MedioPago;
-import com.ecommerce.mobile.servicios.CategoriaServicio;
 import com.ecommerce.mobile.servicios.MedioPagoServicio;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
