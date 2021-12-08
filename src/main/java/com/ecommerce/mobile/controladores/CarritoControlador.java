@@ -3,10 +3,7 @@ package com.ecommerce.mobile.controladores;
 import com.ecommerce.mobile.dto.CarritoDTO;
 import com.ecommerce.mobile.dto.CarritoProductoDTO;
 import com.ecommerce.mobile.entidades.*;
-import com.ecommerce.mobile.servicios.CarritoServicio;
-import com.ecommerce.mobile.servicios.CategoriaServicio;
-import com.ecommerce.mobile.servicios.MedioPagoServicio;
-import com.ecommerce.mobile.servicios.ProductoServicio;
+import com.ecommerce.mobile.servicios.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -27,6 +25,8 @@ public class CarritoControlador {
     private ProductoServicio productoServicio;
     @Autowired
     private MedioPagoServicio medioPagoServicio;
+    @Autowired
+    private UsuarioServicio usuarioServicio;
 
 
     // -- Operaciones que unicamente afectan a la entidad Carrito
@@ -77,7 +77,10 @@ public class CarritoControlador {
         Producto producto = productoServicio.obtenerProductoPorId(carritoDTO.getId_producto());
         double totalPrdPorCant = producto.getPrecio()*carritoDTO.getCantidad();
         Carrito nuevoCarrito = carritoServicio.guardarCarrito(new Carrito(totalPrdPorCant, carritoDTO.getDirFactura()));
-        CarritoProducto nuevoCarritoProducto = new CarritoProducto(nuevoCarrito, producto, carritoDTO.getCantidad(), totalPrdPorCant);
+
+        Usuario usuario = usuarioServicio.obtenerUsuarioPorId(carritoDTO.getId_usuario()).get();
+
+        CarritoProducto nuevoCarritoProducto = new CarritoProducto(nuevoCarrito, producto, usuario,carritoDTO.getCantidad(), totalPrdPorCant);
 
         return nuevoCarritoProducto;
     }
@@ -94,7 +97,10 @@ public class CarritoControlador {
     // -- Operaciones que unicamente afectan a la entidad CarritoProducto
     @PostMapping("/productos/agregar")
     public ResponseEntity<?> setCarritoProducto(@RequestBody CarritoProductoDTO carritoProductoDTO){
-        CarritoProductoPK idCarritoPrd = new CarritoProductoPK(carritoProductoDTO.getId_carrito(), carritoProductoDTO.getId_producto());
+
+        CarritoProductoPK idCarritoPrd = new CarritoProductoPK(carritoProductoDTO.getId_carrito(), carritoProductoDTO.getId_producto(),
+                                                                carritoProductoDTO.getId_usuario());
+
         CarritoProducto carritoPrd = carritoServicio.obtenerCarritoProductoPorId(idCarritoPrd);
 
         Producto prd = productoServicio.obtenerProductoPorId(carritoProductoDTO.getId_producto());
@@ -102,7 +108,8 @@ public class CarritoControlador {
         Carrito carrito = carritoServicio.obtenerCarritoPorId(carritoProductoDTO.getId_carrito());
         Boolean esNuevoPrdEnCarrito = false;
         if (carritoPrd == null){
-            CarritoProducto nuevoCarritoProducto = new CarritoProducto(carrito, prd, carritoProductoDTO.getCantidad(), totalPrd);
+            Usuario usuario = usuarioServicio.obtenerUsuarioPorId(carritoProductoDTO.getId_usuario()).get();
+            CarritoProducto nuevoCarritoProducto = new CarritoProducto(carrito, prd, usuario, carritoProductoDTO.getCantidad(), totalPrd);
             carritoPrd = nuevoCarritoProducto;
             esNuevoPrdEnCarrito = true;
         } else {
@@ -125,10 +132,11 @@ public class CarritoControlador {
         return ResponseEntity.status(HttpStatus.CREATED).body(carritoServicio.guardarCarritoProducto(carritoPrd));
     }
 
-    @GetMapping("/productos/obtener/{idcarrito}/{idproducto}")
+    @GetMapping("/productos/obtener/{idcarrito}/{idproducto}/{idusuario}")
     public ResponseEntity<?> getCarritoProductoPorId(@PathVariable(value = "idcarrito") int idCarrito,
-                                                     @PathVariable(value = "idproducto") int idProducto){
-        CarritoProductoPK id = new CarritoProductoPK(idCarrito, idProducto);
+                                                     @PathVariable(value = "idproducto") int idProducto,
+                                                     @PathVariable(value = "idusuario") String idUsuario){
+        CarritoProductoPK id = new CarritoProductoPK(idCarrito, idProducto, idUsuario);
         CarritoProducto carritoProducto = carritoServicio.obtenerCarritoProductoPorId(id);
         if (carritoProducto == null){
             return ResponseEntity.notFound().build();
@@ -150,10 +158,11 @@ public class CarritoControlador {
         return carritoProducto;
     }
 
-    @DeleteMapping("/productos/{idcarrito}/{idproducto}")
+    @DeleteMapping("/productos/{idcarrito}/{idproducto}/{idusuario}")
     public ResponseEntity<?> deleteCarritoProducto(@PathVariable(value = "idcarrito") int idCarrito,
-                                                   @PathVariable(value = "idproducto") int idProducto){
-        CarritoProductoPK id = new CarritoProductoPK(idCarrito, idProducto);
+                                                   @PathVariable(value = "idproducto") int idProducto,
+                                                   @PathVariable(value = "idusuario") String idUsuario){
+        CarritoProductoPK id = new CarritoProductoPK(idCarrito, idProducto, idUsuario);
         CarritoProducto carritoProductoBorrar = carritoServicio.obtenerCarritoProductoPorId(id);
         if ( carritoProductoBorrar == null){
             return ResponseEntity.notFound().build();
