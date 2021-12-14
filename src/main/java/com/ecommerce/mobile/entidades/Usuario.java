@@ -20,4 +20,5 @@ public class Usuario implements Serializable {
     @Column(length = 60)                    private String direccion;
                                             private int celular;
                                             private Boolean admin;
+    @OneToOne                               private Carrito carritoActivo;
 }

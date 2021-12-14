@@ -14,6 +14,6 @@ import java.io.Serializable;
 public class CarritoProductoPK implements Serializable {
     @Column(name = "id_carrito", nullable = false)      private int idCarrito;
     @Column(name = "id_producto", nullable = false)     private int idProducto;
-    @Column(name = "id_usuario", nullable = false)      private String idUsuario;
+    /*@Column(name = "id_usuario", nullable = false)      private String idUsuario*/;
 
 }
