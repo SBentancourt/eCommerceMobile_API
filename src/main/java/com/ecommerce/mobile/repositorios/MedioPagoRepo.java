@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface MedioPagoRepo extends JpaRepository<MedioPago, Integer> {
     MedioPago findMedioPagoById(int id);
     void deleteMedioPagoById(int id);
+
 }

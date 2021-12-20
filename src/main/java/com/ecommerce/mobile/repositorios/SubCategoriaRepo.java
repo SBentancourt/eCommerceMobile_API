@@ -23,4 +23,6 @@ public interface SubCategoriaRepo extends JpaRepository<SubCategoria, SubCategor
     @Modifying
     @Query("update SubCategoria sc set sc.nombre = ?1 where sc.subCategoriaPK.idCategoria = ?2 and sc.subCategoriaPK.idSubCategoria = ?3")
     void updateNombreSubCategoria(String nombre, int idcat, int idscat);
+
+
 }

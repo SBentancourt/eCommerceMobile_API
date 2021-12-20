@@ -3,16 +3,13 @@ package com.ecommerce.mobile.servicios;
 import com.ecommerce.mobile.entidades.Categoria;
 import com.ecommerce.mobile.entidades.SubCategoria;
 import com.ecommerce.mobile.entidades.SubCategoriaPK;
-import com.ecommerce.mobile.entidades.Usuario;
 import com.ecommerce.mobile.repositorios.CategoriaRepo;
 import com.ecommerce.mobile.repositorios.SubCategoriaRepo;
-import com.ecommerce.mobile.repositorios.UsuarioRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CategoriaServicioImpl implements CategoriaServicio{
